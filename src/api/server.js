@@ -34,6 +34,6 @@ new Server({
 
   seeds(server) {
     server.createList("user", 3);
-    console.log(server.db.dump());
+    //console.log(server.db.dump());
   },
 });
