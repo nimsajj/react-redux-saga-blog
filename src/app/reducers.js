@@ -1,9 +1,4 @@
 import { combineReducers } from "redux";
+import authReducer from "../features/auth/redux/reducer";
 
-const initialState = "Hello";
-
-const helloReducer = (state = initialState, action) => {
-  return state;
-};
-
-export default combineReducers({ hello: helloReducer });
+export default combineReducers({ currentUser: authReducer });
