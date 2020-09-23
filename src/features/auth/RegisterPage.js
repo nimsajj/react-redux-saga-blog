@@ -1,42 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { fetchUserLoginRequest } from "./redux/action";
+import { postUserRegisterRequest } from "./redux/action";
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const dispatch = useDispatch();
   let history = useHistory();
+
   const status = useSelector((state) => state.currentUser.status);
 
+  const handleChangeName = (e) => setName(e.target.value);
   const handleChangeEmail = (e) => setEmail(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
 
   const canDispatch =
-    (status === "initial" || status === "creates") &&
+    status === "initial" &&
+    Boolean(name) &&
     Boolean(email) &&
     Boolean(password);
 
   useEffect(() => {
-    if (status === "succeeded") {
-      history.push("/");
+    if (status === "creates") {
+      history.push("/login");
     }
   }, [status, history]);
 
-  const onLogin = (e) => {
+  const onRegister = (e) => {
     e.preventDefault();
 
     if (canDispatch) {
-      dispatch(fetchUserLoginRequest({ email, password }));
+      dispatch(postUserRegisterRequest({ name, email, password }));
+      setName("");
       setEmail("");
       setPassword("");
     }
   };
 
   return (
-    <form onSubmit={onLogin}>
+    <form onSubmit={onRegister}>
+      <div>
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          type="tewt"
+          name="name"
+          value={name}
+          onChange={handleChangeName}
+        />
+      </div>
       <div>
         <label htmlFor="email">Email</label>
         <input
@@ -57,7 +72,7 @@ export const LoginPage = () => {
           onChange={handleChangePassword}
         />
       </div>
-      <button type="submit">Login</button>
+      <button type="submit">Register</button>
     </form>
   );
 };
