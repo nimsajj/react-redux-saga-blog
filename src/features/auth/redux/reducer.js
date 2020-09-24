@@ -2,10 +2,11 @@ import {
   FETCH_USER_LOGIN_SUCCESS,
   FETCH_USER_LOGIN_ERROR,
   USER_LOGOUT,
-  REQUEST_STATUS,
   POST_USER_REGISTER_SUCCESS,
   POST_USER_REGISTER_ERROR,
 } from "./action";
+
+import { REQUEST_STATUS } from "../../../common/status";
 
 const initialState = {
   status: "initial",
