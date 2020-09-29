@@ -13,6 +13,9 @@ export default () => (
       <li>
         <Link to="/register">Register</Link>
       </li>
+      <li>
+        <Link to="/users">Users</Link>
+      </li>
     </ul>
   </nav>
 );

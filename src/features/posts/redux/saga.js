@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { postsApi, normalize } from "../../../api/endpoints/postsApi";
+import { postsApi, normalize } from "../../../api/endpoints";
 
 import {
   FETCH_POSTS_REQUEST,

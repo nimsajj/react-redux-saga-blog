@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { loginApi, registerApi } from "../../../api/endpoints/userApi";
+import { loginApi, registerApi } from "../../../api/endpoints";
 
 import {
   FETCH_USER_LOGIN_REQUEST,
