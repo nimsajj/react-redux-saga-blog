@@ -67,6 +67,15 @@ new Server({
       return result;
     });
 
+    this.put("/posts/:postId", function (schema, req) {
+      const data = this.normalizedRequestAttrs();
+      data.date = new Date().toISOString();
+
+      const id = req.params.postId;
+
+      return schema.posts.find(id).update(data);
+    });
+
     this.get("/posts/:postId/comments", (schema, req) => {
       const post = schema.posts.find(req.params.postId);
       return post.comments;

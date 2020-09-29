@@ -1,36 +1,29 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPostsRequest } from "./redux/action";
-import { Post } from "./Post";
+import { useSelector, useDispatch } from "react-redux";
+import { AddPostForm } from "./AddPostForm";
+import { PostsList } from "./PostsList";
+import { REQUEST_STATUS } from "../../common/status";
+import { fetchUserRequest } from "../users/redux/action";
 
 export const PostsPage = () => {
+  const usersStatus = useSelector((state) => state.users.status);
+
   const dispatch = useDispatch();
 
-  const status = useSelector((state) => state.posts.status);
-  const error = useSelector((state) => state.posts.error);
-
-  const postsIds = useSelector((state) => state.posts.ids);
-
   useEffect(() => {
-    if (status === "initial") {
-      dispatch(fetchPostsRequest());
+    if (usersStatus === REQUEST_STATUS.initial) {
+      dispatch(fetchUserRequest());
     }
-  }, [status, dispatch]);
+  }, [dispatch, usersStatus]);
 
-  let content;
-
-  if (status === "loading") {
-    content = <p>Chargement ...</p>;
-  } else if (status === "error") {
-    content = <div>{error}</div>;
-  } else if (status === "succeeded") {
-    content = postsIds.map((postId) => <Post key={postId} id={postId} />);
+  if (usersStatus !== REQUEST_STATUS.succeeded) {
+    return "Chargement ...";
   }
 
   return (
-    <section>
-      <h1>Posts</h1>
-      {content}
-    </section>
+    <>
+      <AddPostForm />
+      <PostsList />
+    </>
   );
 };

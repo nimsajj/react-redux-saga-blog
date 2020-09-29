@@ -6,5 +6,5 @@ export const PostAuthor = ({ userId }) => {
     state.users ? state.users.entities[userId] : null
   );
 
-  return <p>{author ? author.name : "Unknown author"}</p>;
+  return <span>{author ? author.name : "Unknown author"}</span>;
 };
