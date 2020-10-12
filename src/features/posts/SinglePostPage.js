@@ -17,7 +17,7 @@ export const SinglePostPage = ({ match }) => {
     );
   }
 
-  const { title, content, date, user } = post;
+  const { title, content, date, author } = post;
 
   return (
     <section>
@@ -26,7 +26,7 @@ export const SinglePostPage = ({ match }) => {
         <p>{content}</p>
         <div>
           <TimeAgo timestamp={date} />
-          <PostAuthor userId={user} />
+          <PostAuthor userId={author} />
         </div>
         <Link to={`/posts/edit/${id}`}>Edit post</Link>&nbsp;
         <Link to="/">Back</Link>

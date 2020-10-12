@@ -12,15 +12,9 @@ import {
 
 function* fetchLogin(action) {
   try {
-    const {
-      data: { user },
-    } = yield call(loginApi, action.payload);
+    const { data: token } = yield call(loginApi, action.payload);
 
-    if (user) {
-      yield put({ type: FETCH_USER_LOGIN_SUCCESS, payload: user });
-    } else {
-      throw new Error("Login failed");
-    }
+    yield put({ type: FETCH_USER_LOGIN_SUCCESS, payload: token });
   } catch (error) {
     yield put({
       type: FETCH_USER_LOGIN_ERROR,
@@ -31,12 +25,10 @@ function* fetchLogin(action) {
 
 function* postRegister(action) {
   try {
-    const {
-      data: { user },
-    } = yield call(registerApi, action.payload);
-
-    if (user) {
-      yield put({ type: POST_USER_REGISTER_SUCCESS, payload: user });
+    const { data } = yield call(registerApi, action.payload);
+    console.log("postRegister saga: ", data);
+    if (data) {
+      yield put({ type: POST_USER_REGISTER_SUCCESS, payload: data });
     } else {
       throw new Error("Register failed");
     }

@@ -9,15 +9,17 @@ export const EditPostForm = ({ match }) => {
 
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
+  const [picture, setPicture] = useState(post.picture);
   const [postStatus, setPostStatus] = useState("initial");
 
   const dispatch = useDispatch();
 
   const canSubmit =
-    Boolean(title) && Boolean(content) && postStatus === "initial";
+    [title, content, picture].every(Boolean) && postStatus === "initial";
 
   const onChangeTitle = (e) => setTitle(e.target.value);
   const onChangeContent = (e) => setContent(e.target.value);
+  const onChangePicture = (e) => setPicture(e.target.value);
 
   const onSubmitPost = (e) => {
     e.preventDefault();
@@ -25,10 +27,11 @@ export const EditPostForm = ({ match }) => {
     if (canSubmit) {
       try {
         setPostStatus("pending");
-        dispatch(editPostRequest({ postId: post.id, title, content }));
+        dispatch(editPostRequest({ postId, title, content, picture }));
 
         setTitle("");
         setContent("");
+        setPicture("");
       } catch (error) {
         console.error(error);
       } finally {
@@ -57,6 +60,15 @@ export const EditPostForm = ({ match }) => {
             type="text"
             value={content}
             onChange={onChangeContent}
+          />
+        </div>
+        <div>
+          <label htmlFor="picture">Picture</label>
+          <input
+            id="picture"
+            type="text"
+            value={picture}
+            onChange={onChangePicture}
           />
         </div>
         <button type="submit">Edit</button>
