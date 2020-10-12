@@ -9,6 +9,7 @@ const initialState = {
   status: REQUEST_STATUS.initial,
   error: null,
   entities: {},
+  ids: [],
 };
 
 export default (state = initialState, action) => {
@@ -16,7 +17,12 @@ export default (state = initialState, action) => {
     case FETCH_USERS_REQUEST:
       return { ...state, ...action.payload, status: REQUEST_STATUS.loading };
     case FETCH_USERS_SUCCESS:
-      return { ...state, ...action.payload, status: REQUEST_STATUS.succeeded };
+      return {
+        ...state,
+        entities: action.payload.entities.users,
+        ids: action.payload.result,
+        status: REQUEST_STATUS.succeeded,
+      };
     case FETCH_USERS_ERROR:
       return { ...state, error: action.payload, status: REQUEST_STATUS.error };
     default:

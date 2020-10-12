@@ -46,7 +46,7 @@ function* editPost(action) {
       data: { post },
     } = yield call(postsApi.put, action.payload);
 
-    //console.log("post: ", post, action.payload);
+    console.log("post: ", action.payload);
 
     yield put({ type: EDIT_POST_SUCCESS, payload: post });
   } catch (error) {
