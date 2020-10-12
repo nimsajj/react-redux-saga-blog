@@ -14,7 +14,7 @@ export const PostItem = ({ id }) => {
       </Link>
       <p>{post.content}</p>
       <div>
-        <PostAuthor userId={post.user} />
+        <PostAuthor userId={post.author} />
         <TimeAgo timestamp={post.date} />
       </div>
       <div>

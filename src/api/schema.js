@@ -1,10 +1,12 @@
 import { schema } from "normalizr";
 
-export const articleSchema = new schema.Entity("articles");
-export const articlesSchema = new schema.Array(articleSchema);
+export const usersSchema = new schema.Array(
+  new schema.Entity("users", {
+    articles: new schema.Array(new schema.Entity("articles")),
+  })
+);
 
-export const userSchema = new schema.Entity("users", {
-  articles: articlesSchema,
+export const postSchema = new schema.Entity("articles", {
+  author: new schema.Entity("users"),
 });
-
-export const usersSchema = new schema.Array(userSchema);
+export const postsShema = new schema.Array(postSchema);

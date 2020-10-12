@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { postsApi, normalize } from "../../../api/endpoints";
-
+import { normalize } from "normalizr";
+import { postsApi } from "../../../api/endpoints";
+import { postsShema, postSchema } from "../../../api/schema";
 import {
   FETCH_POSTS_REQUEST,
   FETCH_POSTS_SUCCESS,
@@ -15,11 +16,12 @@ import {
 
 function* fetchPosts(action) {
   try {
-    const {
-      data: { posts },
-    } = yield call(postsApi.getAll, action.payload);
+    const { data } = yield call(postsApi.getAll, action.payload);
 
-    yield put({ type: FETCH_POSTS_SUCCESS, payload: normalize(posts) });
+    yield put({
+      type: FETCH_POSTS_SUCCESS,
+      payload: normalize(data, postsShema),
+    });
   } catch (error) {
     yield put({
       type: FETCH_POSTS_ERROR,
@@ -30,11 +32,9 @@ function* fetchPosts(action) {
 
 function* addPost(action) {
   try {
-    const {
-      data: { post },
-    } = yield call(postsApi.post, action.payload);
+    const { data } = yield call(postsApi.post, action.payload);
 
-    yield put({ type: ADD_POST_SUCCESS, payload: post });
+    yield put({ type: ADD_POST_SUCCESS, payload: normalize(data, postSchema) });
   } catch (error) {
     yield put({ type: ADD_POST_ERROR, payload: error.message });
   }
@@ -42,13 +42,13 @@ function* addPost(action) {
 
 function* editPost(action) {
   try {
-    const {
-      data: { post },
-    } = yield call(postsApi.put, action.payload);
+    const { data } = yield call(postsApi.put, action.payload);
 
-    console.log("post: ", action.payload);
-
-    yield put({ type: EDIT_POST_SUCCESS, payload: post });
+    console.log("edit post : ", normalize(data, postSchema));
+    yield put({
+      type: EDIT_POST_SUCCESS,
+      payload: normalize(data, postSchema),
+    });
   } catch (error) {
     yield put({ type: EDIT_POST_ERROR, payload: error.message });
   }
