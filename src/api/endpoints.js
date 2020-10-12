@@ -1,4 +1,5 @@
 import axios from "axios";
+import httpClient from "./httpClient";
 
 // Normalize response data
 export const normalize = (response) => {
@@ -27,5 +28,5 @@ export const postsApi = {
 // Users endpoints
 //export const usersApi = () => axios.get("api/users");
 export const usersApi = {
-  getAll: () => axios.get("api/users"),
+  getAll: () => httpClient.get("users"),
 };
