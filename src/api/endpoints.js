@@ -14,9 +14,8 @@ export const normalize = (response) => {
 };
 
 // Auth endpoints
-export const loginApi = (params) => axios.post("api/users/login", params);
-export const registerApi = (params) =>
-  axios.post("api/users", { user: params });
+export const loginApi = (params) => httpClient.post("login", params);
+export const registerApi = (params) => httpClient.post("users", params);
 
 // Posts endpoints
 export const postsApi = {
@@ -26,7 +25,6 @@ export const postsApi = {
 };
 
 // Users endpoints
-//export const usersApi = () => axios.get("api/users");
 export const usersApi = {
   getAll: () => httpClient.get("users"),
 };

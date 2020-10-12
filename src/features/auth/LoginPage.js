@@ -4,19 +4,19 @@ import { useHistory } from "react-router-dom";
 import { fetchUserLoginRequest } from "./redux/action";
 
 export const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   let history = useHistory();
   const status = useSelector((state) => state.currentUser.status);
 
-  const handleChangeEmail = (e) => setEmail(e.target.value);
+  const handleChangeUsername = (e) => setUsername(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
 
   const canDispatch =
     (status === "initial" || status === "creates") &&
-    Boolean(email) &&
+    Boolean(username) &&
     Boolean(password);
 
   useEffect(() => {
@@ -29,8 +29,8 @@ export const LoginPage = () => {
     e.preventDefault();
 
     if (canDispatch) {
-      dispatch(fetchUserLoginRequest({ email, password }));
-      setEmail("");
+      dispatch(fetchUserLoginRequest({ username, password }));
+      setUsername("");
       setPassword("");
     }
   };
@@ -38,13 +38,13 @@ export const LoginPage = () => {
   return (
     <form onSubmit={onLogin}>
       <div>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="username">Username</label>
         <input
-          id="email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChangeEmail}
+          id="username"
+          type="text"
+          name="username"
+          value={username}
+          onChange={handleChangeUsername}
         />
       </div>
       <div>

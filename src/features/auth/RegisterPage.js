@@ -6,6 +6,7 @@ import { postUserRegisterRequest } from "./redux/action";
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
@@ -16,12 +17,12 @@ export const RegisterPage = () => {
   const handleChangeName = (e) => setName(e.target.value);
   const handleChangeEmail = (e) => setEmail(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
+  const handleChangeUsername = (e) => setUsername(e.target.value);
 
   const canDispatch =
     status === "initial" &&
-    Boolean(name) &&
-    Boolean(email) &&
-    Boolean(password);
+    status === "error" &&
+    [name, email, password, username].every(Boolean);
 
   useEffect(() => {
     if (status === "creates") {
@@ -33,10 +34,11 @@ export const RegisterPage = () => {
     e.preventDefault();
 
     if (canDispatch) {
-      dispatch(postUserRegisterRequest({ name, email, password }));
+      dispatch(postUserRegisterRequest({ name, email, password, username }));
       setName("");
       setEmail("");
       setPassword("");
+      setUsername("");
     }
   };
 
@@ -60,6 +62,16 @@ export const RegisterPage = () => {
           name="email"
           value={email}
           onChange={handleChangeEmail}
+        />
+      </div>
+      <div>
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          value={username}
+          onChange={handleChangeUsername}
         />
       </div>
       <div>

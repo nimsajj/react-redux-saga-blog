@@ -7,6 +7,7 @@ import {
 } from "./action";
 
 import { REQUEST_STATUS } from "../../../common/status";
+import { setJwt } from "../../../common/storage";
 
 const initialState = {
   status: "initial",
@@ -16,7 +17,8 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_USER_LOGIN_SUCCESS:
-      return { ...state, ...action.payload, status: REQUEST_STATUS.succeeded };
+      setJwt(action.payload.token);
+      return { ...state, status: REQUEST_STATUS.succeeded };
     case FETCH_USER_LOGIN_ERROR:
       return { ...state, error: action.payload, status: REQUEST_STATUS.error };
     case POST_USER_REGISTER_SUCCESS:
