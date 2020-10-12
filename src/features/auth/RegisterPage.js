@@ -20,9 +20,8 @@ export const RegisterPage = () => {
   const handleChangeUsername = (e) => setUsername(e.target.value);
 
   const canDispatch =
-    status === "initial" &&
-    status === "error" &&
-    [name, email, password, username].every(Boolean);
+    status === "initial" ||
+    (status === "error" && [name, email, password, username].every(Boolean));
 
   useEffect(() => {
     if (status === "creates") {
