@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchUserLoginRequest } from "./redux/action";
+import FieldGroup from "../../ui/FieldGroup";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  let history = useHistory();
+  const history = useHistory();
+
   const status = useSelector((state) => state.currentUser.status);
 
   const handleChangeUsername = (e) => setUsername(e.target.value);
@@ -36,28 +38,24 @@ export const LoginPage = () => {
   };
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
+    <section>
+      <h2>Connect to Blog</h2>
+      <form onSubmit={onLogin} className="mt-4">
+        <FieldGroup
           name="username"
           value={username}
           onChange={handleChangeUsername}
         />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
+        <FieldGroup
           type="password"
           name="password"
           value={password}
           onChange={handleChangePassword}
         />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Login
+        </button>
+      </form>
+    </section>
   );
 };

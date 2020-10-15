@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { editPostRequest } from "./redux/action";
+import FieldGroup from "../../ui/FieldGroup";
 
 export const EditPostForm = ({ match }) => {
   const { postId } = match.params;
@@ -44,35 +46,16 @@ export const EditPostForm = ({ match }) => {
     <section>
       <h2>Edit post</h2>
       <form onSubmit={onSubmitPost}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input
-            id="title"
-            type="text"
-            value={title}
-            onChange={onChangeTitle}
-          />
-        </div>
-        <div>
-          <label htmlFor="content">Content</label>
-          <input
-            id="content"
-            type="text"
-            value={content}
-            onChange={onChangeContent}
-          />
-        </div>
-        <div>
-          <label htmlFor="picture">Picture</label>
-          <input
-            id="picture"
-            type="text"
-            value={picture}
-            onChange={onChangePicture}
-          />
-        </div>
-        <button type="submit">Edit</button>
+        <FieldGroup name="title" value={title} onChange={onChangeTitle} />
+        <FieldGroup name="content" value={content} onChange={onChangeContent} />
+        <FieldGroup name="picture" value={picture} onChange={onChangePicture} />
+        <button type="submit" className="btn btn-primary">
+          Edit
+        </button>
       </form>
+      <div className="mt-4">
+        <Link to="/">Back to the list of posts</Link>
+      </div>
     </section>
   );
 };

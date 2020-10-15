@@ -1,31 +1,38 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Navbar from "./Navbar";
-import { LoginPage } from "../features/auth/LoginPage";
-import { RegisterPage } from "../features/auth/RegisterPage";
-import { PostsPage } from "../features/posts/PostsPage";
-import { UsersPage } from "../features/users/UsersPage";
-import { UserPage } from "../features/users/UserPage";
-import { SinglePostPage } from "../features/posts/SinglePostPage";
-import { EditPostForm } from "../features/posts/EditPostForm";
+import Container from "../ui/Container";
+import routes from "../config/routes";
+import { getJwt, refreshJwt } from "../common/storage";
 
-function App() {
+const App = () => {
+  refreshJwt();
+
   return (
-    <div>
-      <Router>
-        <Navbar />
+    <Router>
+      <Navbar />
+      <Container>
         <Switch>
-          <Route exact path="/" component={PostsPage} />
-          <Route exact path="/posts/:id" component={SinglePostPage} />
-          <Route exat path="/posts/edit/:postId" component={EditPostForm} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/users" component={UsersPage} />
-          <Route exact path="/users/:userId" component={UserPage} />
+          <Route
+            exact
+            path="/"
+            render={() =>
+              getJwt() ? <Redirect to="/posts" /> : <Redirect to="/login" />
+            }
+          />
+          {routes.map((route) => (
+            <Route exact key={route.path} {...route} />
+          ))}
+          <Route component={() => <div>Error 404</div>} />
         </Switch>
-      </Router>
-    </div>
+      </Container>
+    </Router>
   );
-}
+};
 
 export default App;

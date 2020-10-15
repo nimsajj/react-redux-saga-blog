@@ -4,9 +4,15 @@ import { AddPostForm } from "./AddPostForm";
 import { PostsList } from "./PostsList";
 import { REQUEST_STATUS } from "../../common/status";
 import { fetchUserRequest } from "../users/redux/action";
+import { fetchPostsRequest } from "./redux/action";
 
 export const PostsPage = () => {
   const usersStatus = useSelector((state) => state.users.status);
+  const postsStatus = useSelector((state) => state.posts.status);
+
+  const isLoading =
+    postsStatus !== REQUEST_STATUS.succeeded ||
+    usersStatus !== REQUEST_STATUS.succeeded;
 
   const dispatch = useDispatch();
 
@@ -16,7 +22,13 @@ export const PostsPage = () => {
     }
   }, [dispatch, usersStatus]);
 
-  if (usersStatus !== REQUEST_STATUS.succeeded) {
+  useEffect(() => {
+    if (postsStatus === REQUEST_STATUS.initial) {
+      dispatch(fetchPostsRequest());
+    }
+  }, [dispatch, postsStatus]);
+
+  if (isLoading) {
     return "Chargement ...";
   }
 
