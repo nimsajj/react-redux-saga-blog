@@ -5,7 +5,7 @@ import { fetchUserLoginRequest } from "./redux/action";
 import FieldGroup from "../../ui/FieldGroup";
 
 export const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
@@ -13,12 +13,12 @@ export const LoginPage = () => {
 
   const status = useSelector((state) => state.currentUser.status);
 
-  const handleChangeUsername = (e) => setUsername(e.target.value);
+  const handleChangeEmail = (e) => setEmail(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
 
   const canDispatch =
     (status === "initial" || status === "creates") &&
-    Boolean(username) &&
+    Boolean(email) &&
     Boolean(password);
 
   useEffect(() => {
@@ -31,8 +31,8 @@ export const LoginPage = () => {
     e.preventDefault();
 
     if (canDispatch) {
-      dispatch(fetchUserLoginRequest({ username, password }));
-      setUsername("");
+      dispatch(fetchUserLoginRequest({ email, password }));
+      setEmail("");
       setPassword("");
     }
   };
@@ -42,9 +42,10 @@ export const LoginPage = () => {
       <h2>Connect to Blog</h2>
       <form onSubmit={onLogin} className="mt-4">
         <FieldGroup
-          name="username"
-          value={username}
-          onChange={handleChangeUsername}
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChangeEmail}
         />
         <FieldGroup
           type="password"
