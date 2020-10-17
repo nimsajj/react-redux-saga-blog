@@ -47,8 +47,8 @@ export const EditPostForm = ({ match }) => {
       <h2>Edit post</h2>
       <form onSubmit={onSubmitPost}>
         <FieldGroup name="title" value={title} onChange={onChangeTitle} />
-        <FieldGroup name="content" value={content} onChange={onChangeContent} />
         <FieldGroup name="picture" value={picture} onChange={onChangePicture} />
+        <FieldGroup name="content" value={content} onChange={onChangeContent} />
         <button type="submit" className="btn btn-primary">
           Edit
         </button>
