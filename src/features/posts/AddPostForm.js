@@ -11,8 +11,7 @@ export const AddPostForm = () => {
 
   const dispatch = useDispatch();
 
-  const canSubmit =
-    [title, content, picture].every(Boolean) && postStatus === "initial";
+  const canSubmit = [title, content].every(Boolean) && postStatus === "initial";
 
   const onChangeTitle = (e) => setTitle(e.target.value);
   const onChangeContent = (e) => setContent(e.target.value);
