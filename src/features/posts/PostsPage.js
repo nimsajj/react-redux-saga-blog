@@ -9,6 +9,7 @@ import { fetchPostsRequest } from "./redux/action";
 export const PostsPage = () => {
   const usersStatus = useSelector((state) => state.users.status);
   const postsStatus = useSelector((state) => state.posts.status);
+  const postsError = useSelector((state) => state.posts.error);
 
   const isLoading =
     postsStatus !== REQUEST_STATUS.succeeded ||
@@ -27,6 +28,10 @@ export const PostsPage = () => {
       dispatch(fetchPostsRequest());
     }
   }, [dispatch, postsStatus]);
+
+  if (postsError) {
+    return <div>{postsError}</div>;
+  }
 
   if (isLoading) {
     return "Chargement ...";

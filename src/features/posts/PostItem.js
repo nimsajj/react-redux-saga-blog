@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { TimeAgo } from "./TimeAgo";
 import { PostAuthor } from "./PostAuthor";
@@ -19,9 +18,7 @@ const IconLink = () => (
   </svg>
 );
 
-export const PostItem = ({ id }) => {
-  const post = useSelector((state) => state.posts.entities[id]);
-
+export const PostItem = ({ post }) => {
   return (
     <Card>
       <Link to={`/posts/${post.id}`}>

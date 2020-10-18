@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { editPostRequest } from "./redux/action";
 import FieldGroup from "../../ui/FieldGroup";
 
-export const EditPostForm = ({ match }) => {
+export const EditPostForm = ({ match, history }) => {
   const { postId } = match.params;
 
   const post = useSelector((state) => state.posts.entities[postId]);
@@ -16,8 +16,7 @@ export const EditPostForm = ({ match }) => {
 
   const dispatch = useDispatch();
 
-  const canSubmit =
-    [title, content, picture].every(Boolean) && postStatus === "initial";
+  const canSubmit = [title, content].every(Boolean) && postStatus === "initial";
 
   const onChangeTitle = (e) => setTitle(e.target.value);
   const onChangeContent = (e) => setContent(e.target.value);
@@ -38,6 +37,7 @@ export const EditPostForm = ({ match }) => {
         console.error(error);
       } finally {
         setPostStatus("initial");
+        history.push("/posts");
       }
     }
   };

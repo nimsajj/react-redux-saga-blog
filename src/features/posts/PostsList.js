@@ -3,25 +3,18 @@ import { useSelector } from "react-redux";
 import { PostItem } from "./PostItem";
 
 export const PostsList = () => {
-  const status = useSelector((state) => state.posts.status);
-  const error = useSelector((state) => state.posts.error);
+  const posts = useSelector((state) => Object.values(state.posts.entities));
+  const orderPosts = posts
+    .slice()
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
-  const postsIds = useSelector((state) => state.posts.ids);
-
-  let content;
-
-  if (status === "loading") {
-    content = <p>Chargement ...</p>;
-  } else if (status === "error") {
-    content = <div>{error}</div>;
-  } else if (status === "succeeded") {
-    content = postsIds.map((postId) => <PostItem key={postId} id={postId} />);
-  }
+  const renderedOrderPost = () =>
+    orderPosts.map((post) => <PostItem key={post.id} post={post} />);
 
   return (
     <section className="mt-5">
       <h2>Posts</h2>
-      {content}
+      {renderedOrderPost()}
     </section>
   );
 };

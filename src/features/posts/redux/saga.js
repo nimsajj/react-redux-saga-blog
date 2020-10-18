@@ -44,7 +44,6 @@ function* editPost(action) {
   try {
     const { data } = yield call(postsApi.put, action.payload);
 
-    console.log("edit post : ", normalize(data, postSchema));
     yield put({
       type: EDIT_POST_SUCCESS,
       payload: normalize(data, postSchema),
