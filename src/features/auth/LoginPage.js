@@ -12,14 +12,14 @@ export const LoginPage = () => {
   const history = useHistory();
 
   const status = useSelector((state) => state.currentUser.status);
+  const error = useSelector((state) => state.currentUser.error);
 
   const handleChangeEmail = (e) => setEmail(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
 
   const canDispatch =
-    (status === "initial" || status === "creates") &&
-    Boolean(email) &&
-    Boolean(password);
+    ["initial", "creates", "error"].includes(status) &&
+    [email, password].every(Boolean);
 
   useEffect(() => {
     if (status === "succeeded") {
@@ -57,6 +57,7 @@ export const LoginPage = () => {
           Login
         </button>
       </form>
+      {error && <div>{error}</div>}
     </section>
   );
 };
