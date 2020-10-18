@@ -2,7 +2,7 @@ import httpClient from "./httpClient";
 
 // Auth endpoints
 export const loginApi = (params) => httpClient.post("login", params);
-export const registerApi = (params) => httpClient.post("users", params);
+export const registerApi = (params) => httpClient.post("register", params);
 
 // Posts endpoints
 export const postsApi = {

@@ -11,7 +11,7 @@ export const RegisterPage = () => {
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
-  let history = useHistory();
+  const history = useHistory();
 
   const status = useSelector((state) => state.currentUser.status);
 
