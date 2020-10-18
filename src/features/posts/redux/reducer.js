@@ -6,6 +6,8 @@ import {
   ADD_POST_ERROR,
   EDIT_POST_SUCCESS,
   EDIT_POST_ERROR,
+  FETCH_SINGLE_POST_SUCCESS,
+  FETCH_SINGLE_POST_ERROR,
 } from "./action";
 import { REQUEST_STATUS } from "../../../common/status";
 
@@ -49,6 +51,15 @@ export default (state = initialState, action) => {
       };
     case EDIT_POST_ERROR:
       return { ...state, error: action.payload, status: REQUEST_STATUS.error };
+    case FETCH_SINGLE_POST_SUCCESS:
+      return {
+        ...state,
+        entities: { ...state.entities, ...action.payload.entities.articles },
+        status: REQUEST_STATUS.initial,
+      };
+    case FETCH_SINGLE_POST_ERROR:
+      return { ...state, error: action.payload, status: REQUEST_STATUS.error };
+
     default:
       return state;
   }

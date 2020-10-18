@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { editPostRequest } from "./redux/action";
+import { editPostRequest, fetchSinglePostRequest } from "./redux/action";
 import FieldGroup from "../../ui/FieldGroup";
 
 export const EditPostForm = ({ match, history }) => {
@@ -9,12 +9,22 @@ export const EditPostForm = ({ match, history }) => {
 
   const post = useSelector((state) => state.posts.entities[postId]);
 
-  const [title, setTitle] = useState(post.title);
-  const [content, setContent] = useState(post.content);
-  const [picture, setPicture] = useState(post.picture);
+  const dispatch = useDispatch();
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [picture, setPicture] = useState("");
   const [postStatus, setPostStatus] = useState("initial");
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (!post) {
+      dispatch(fetchSinglePostRequest(postId));
+    } else {
+      setTitle(post.title);
+      setContent(post.content);
+      setPicture(post.picture);
+    }
+  }, [dispatch, post, postId]);
 
   const canSubmit = [title, content].every(Boolean) && postStatus === "initial";
 

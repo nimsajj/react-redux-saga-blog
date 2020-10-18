@@ -7,6 +7,7 @@ export const registerApi = (params) => httpClient.post("register", params);
 // Posts endpoints
 export const postsApi = {
   getAll: () => httpClient.get("articles"),
+  get: (id) => httpClient.get(`articles/${id}`),
   post: (data) => httpClient.post("articles", data),
   put: (data) => httpClient.put(`articles/${data.postId}`, data),
 };
