@@ -2,22 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { fetchUserLoginRequest } from "./redux/action";
+import FieldGroup from "../../ui/FieldGroup";
 
 export const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  let history = useHistory();
-  const status = useSelector((state) => state.currentUser.status);
+  const history = useHistory();
 
-  const handleChangeUsername = (e) => setUsername(e.target.value);
+  const status = useSelector((state) => state.currentUser.status);
+  const error = useSelector((state) => state.currentUser.error);
+
+  const handleChangeEmail = (e) => setEmail(e.target.value);
   const handleChangePassword = (e) => setPassword(e.target.value);
 
   const canDispatch =
-    (status === "initial" || status === "creates") &&
-    Boolean(username) &&
-    Boolean(password);
+    ["initial", "creates", "error"].includes(status) &&
+    [email, password].every(Boolean);
 
   useEffect(() => {
     if (status === "succeeded") {
@@ -29,35 +31,33 @@ export const LoginPage = () => {
     e.preventDefault();
 
     if (canDispatch) {
-      dispatch(fetchUserLoginRequest({ username, password }));
-      setUsername("");
+      dispatch(fetchUserLoginRequest({ email, password }));
+      setEmail("");
       setPassword("");
     }
   };
 
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          name="username"
-          value={username}
-          onChange={handleChangeUsername}
+    <section>
+      <h2>Connect to Blog</h2>
+      <form onSubmit={onLogin} className="mt-4">
+        <FieldGroup
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleChangeEmail}
         />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
+        <FieldGroup
           type="password"
           name="password"
           value={password}
           onChange={handleChangePassword}
         />
-      </div>
-      <button type="submit">Login</button>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Login
+        </button>
+      </form>
+      {error && <div>{error}</div>}
+    </section>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPostRequest } from "./redux/action";
+import FieldGroup from "../../ui/FieldGroup";
 
 export const AddPostForm = () => {
   const [title, setTitle] = useState("");
@@ -10,8 +11,7 @@ export const AddPostForm = () => {
 
   const dispatch = useDispatch();
 
-  const canSubmit =
-    [title, content, picture].every(Boolean) && postStatus === "initial";
+  const canSubmit = [title, content].every(Boolean) && postStatus === "initial";
 
   const onChangeTitle = (e) => setTitle(e.target.value);
   const onChangeContent = (e) => setContent(e.target.value);
@@ -39,35 +39,13 @@ export const AddPostForm = () => {
   return (
     <section>
       <h2>Add new post</h2>
-      <form onSubmit={onSubmitPost}>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input
-            id="title"
-            type="text"
-            value={title}
-            onChange={onChangeTitle}
-          />
-        </div>
-        <div>
-          <label htmlFor="picture">Picture</label>
-          <input
-            id="picture"
-            type="text"
-            value={picture}
-            onChange={onChangePicture}
-          />
-        </div>
-        <div>
-          <label htmlFor="content">Content</label>
-          <input
-            id="content"
-            type="text"
-            value={content}
-            onChange={onChangeContent}
-          />
-        </div>
-        <button type="submit">Add</button>
+      <form onSubmit={onSubmitPost} className="mt-3">
+        <FieldGroup name="title" value={title} onChange={onChangeTitle} />
+        <FieldGroup name="picture" value={picture} onChange={onChangePicture} />
+        <FieldGroup name="content" value={content} onChange={onChangeContent} />
+        <button type="submit" className="btn btn-primary">
+          Add
+        </button>
       </form>
     </section>
   );

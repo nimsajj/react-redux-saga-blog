@@ -26,7 +26,7 @@ function* fetchLogin(action) {
 function* postRegister(action) {
   try {
     const { data } = yield call(registerApi, action.payload);
-    console.log("postRegister saga: ", data);
+
     if (data) {
       yield put({ type: POST_USER_REGISTER_SUCCESS, payload: data });
     } else {

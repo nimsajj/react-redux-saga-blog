@@ -1,36 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPostsRequest } from "./redux/action";
+import React from "react";
+import { useSelector } from "react-redux";
 import { PostItem } from "./PostItem";
 
 export const PostsList = () => {
-  const dispatch = useDispatch();
+  const posts = useSelector((state) => Object.values(state.posts.entities));
+  const orderPosts = posts
+    .slice()
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
-  const status = useSelector((state) => state.posts.status);
-  const error = useSelector((state) => state.posts.error);
-
-  const postsIds = useSelector((state) => state.posts.ids);
-
-  useEffect(() => {
-    if (status === "initial") {
-      dispatch(fetchPostsRequest());
-    }
-  }, [status, dispatch]);
-
-  let content;
-
-  if (status === "loading") {
-    content = <p>Chargement ...</p>;
-  } else if (status === "error") {
-    content = <div>{error}</div>;
-  } else if (status === "succeeded") {
-    content = postsIds.map((postId) => <PostItem key={postId} id={postId} />);
-  }
+  const renderedOrderPost = () =>
+    orderPosts.map((post) => <PostItem key={post.id} post={post} />);
 
   return (
-    <section>
+    <section className="mt-5">
       <h2>Posts</h2>
-      {content}
+      {renderedOrderPost()}
     </section>
   );
 };

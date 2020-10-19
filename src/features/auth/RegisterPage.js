@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { postUserRegisterRequest } from "./redux/action";
+import FieldGroup from "../../ui/FieldGroup";
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +11,7 @@ export const RegisterPage = () => {
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
-  let history = useHistory();
+  const history = useHistory();
 
   const status = useSelector((state) => state.currentUser.status);
 
@@ -42,48 +43,33 @@ export const RegisterPage = () => {
   };
 
   return (
-    <form onSubmit={onRegister}>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          type="tewt"
-          name="name"
-          value={name}
-          onChange={handleChangeName}
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
+    <section>
+      <h2>Register on the Blog</h2>
+      <form onSubmit={onRegister} className="mt-4">
+        <FieldGroup name="name" value={name} onChange={handleChangeName} />
+        <FieldGroup
           type="email"
           name="email"
           value={email}
           onChange={handleChangeEmail}
-        />
-      </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
+        >
+          @
+        </FieldGroup>
+        <FieldGroup
           name="username"
           value={username}
           onChange={handleChangeUsername}
         />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
+        <FieldGroup
           type="password"
           name="password"
           value={password}
           onChange={handleChangePassword}
         />
-      </div>
-      <button type="submit">Register</button>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
+      </form>
+    </section>
   );
 };

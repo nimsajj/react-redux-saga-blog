@@ -1,13 +1,21 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { TimeAgo } from "./TimeAgo";
 import { PostAuthor } from "./PostAuthor";
 import { Link } from "react-router-dom";
+import { fetchSinglePostRequest } from "./redux/action";
 
 export const SinglePostPage = ({ match }) => {
   const { id } = match.params;
 
+  const dispatch = useDispatch();
   const post = useSelector((state) => state.posts.entities[id]);
+
+  useEffect(() => {
+    if (!post) {
+      dispatch(fetchSinglePostRequest(id));
+    }
+  }, [dispatch, post, id]);
 
   if (!post) {
     return (

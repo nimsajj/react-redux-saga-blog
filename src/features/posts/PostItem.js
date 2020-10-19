@@ -1,16 +1,31 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { TimeAgo } from "./TimeAgo";
 import { PostAuthor } from "./PostAuthor";
+import Card from "../../ui/Card";
 
-export const PostItem = ({ id }) => {
-  const post = useSelector((state) => state.posts.entities[id]);
+const IconLink = () => (
+  <svg
+    width="1em"
+    height="1em"
+    viewBox="0 0 16 16"
+    className="bi bi-link"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z" />
+    <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z" />
+  </svg>
+);
 
+export const PostItem = ({ post }) => {
   return (
-    <article>
+    <Card>
       <Link to={`/posts/${post.id}`}>
-        <h3>{post.title}</h3>
+        <h3>
+          <IconLink /> &nbsp;
+          {post.title}
+        </h3>
       </Link>
       <p>{post.content}</p>
       <div>
@@ -18,8 +33,10 @@ export const PostItem = ({ id }) => {
         <TimeAgo timestamp={post.date} />
       </div>
       <div>
-        <Link to={`/posts/edit/${post.id}`}>Edit this post</Link>
+        <Link to={`/posts/edit/${post.id}`} className="btn btn-secondary mt-2">
+          Edit this post
+        </Link>
       </div>
-    </article>
+    </Card>
   );
 };

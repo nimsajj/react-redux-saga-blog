@@ -7,7 +7,7 @@ import {
 } from "./action";
 
 import { REQUEST_STATUS } from "../../../common/status";
-import { setJwt } from "../../../common/storage";
+import { setJwt, removeJwt } from "../../../common/storage";
 
 const initialState = {
   status: "initial",
@@ -30,6 +30,7 @@ export default (state = initialState, action) => {
         status: REQUEST_STATUS.error,
       };
     case USER_LOGOUT:
+      removeJwt();
       return initialState;
     default:
       return state;

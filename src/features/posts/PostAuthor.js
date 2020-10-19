@@ -6,5 +6,9 @@ export const PostAuthor = ({ userId }) => {
     state.users ? state.users.entities[userId] : null
   );
 
-  return <span>{author ? author.name : "Unknown author"}</span>;
+  return (
+    <span className="badge badge-light">
+      {author ? `by ${author.name}` : "Unknown author"}
+    </span>
+  );
 };
